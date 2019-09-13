@@ -1,0 +1,54 @@
+$hund: 100px;
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    margin:$hund;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7,$hund);
+    grid-gap: 1px 3px;
+    max-width: 700px;
+}
+
+.calendar>div {
+    background-color: #eeeeee;
+    width: $hund;
+    height: $hund;
+    box-sizing: border-box;
+    line-height: $hund;
+    border: 1px solid black;
+    transition: transform 0.5s;
+    text-align: center;
+}
+
+.calendar>div:hover {
+    cursor: pointer;
+    background-color: pink;
+    transform: translateY(-20px);
+}
+
+@for $i from 1 to 32 {
+    div:nth-child(#{$i})::after {
+        content: "#{$i}";
+    }
+}
+
+
+$days: "mon", "tue", "wed", "thu", "fri", "sat", "sun";
+$j:1;
+@each $day in $days {
+    .calendar-#{$day} :nth-child(1) {
+        grid-column-start: $j;
+    }
+    $j:$j+1;
+}
+
+@for $i from 28 to 31 {
+    .calendar-#{$i} :nth-child(#{$i}) ~ div 
+    {
+       display: none;
+    }
+}
